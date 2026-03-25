@@ -30,10 +30,10 @@ app.use(limiter);
 // No Database connection needed.
 
 // Route Mounts
-app.use('https://frontend-vid-vpit.vercel.app/app/api/download', downloadRoutes);
+app.use('/api/download', downloadRoutes);
 
 // Health Check
-app.get('https://frontend-vid-vpit.vercel.app/app/api/download/api/health', (req, res) => res.json({ status: 'success', message: 'VidSnatcher Core API running securely!' }));
+app.get('/api/health', (req, res) => res.json({ status: 'success', message: 'VidSnatcher Core API running securely!' }));
 
 // Global Error Handler
 app.use(errorHandler);
