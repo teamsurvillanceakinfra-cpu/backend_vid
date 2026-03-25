@@ -34,9 +34,11 @@ export const extractVideoInfo = async (rawUrl) => {
       noCheckCertificates: true,
       preferFreeFormats: true,
 
-        extractorArgs: [
-    'dailymotion:impersonate=false'
-  ],
+     extractorArgs: {
+  dailymotion: {
+    impersonate: 'false'
+  }
+},
 
   addHeader: [
     'user-agent:Mozilla/5.0'
