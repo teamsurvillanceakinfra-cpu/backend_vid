@@ -1,6 +1,4 @@
 import youtubedl from 'youtube-dl-exec';
-import fs from 'fs';
-import path from 'path';
 
 
 /**
@@ -35,16 +33,6 @@ export const extractVideoInfo = async (rawUrl) => {
       noWarnings: true,
       noCheckCertificates: true,
       preferFreeFormats: true,
-      cookies: './cookies.txt', // ✅ IMPORTANT
-
-        // 🔥 KEY PART
-  extractorArgs: [
-    'youtube:player_client=android'
-  ],
-
-  addHeader: [
-    'user-agent:com.google.android.youtube/17.31.35 (Linux; U; Android 11)'
-  ],
     });
 
     // Extract core metadata
