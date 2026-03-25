@@ -1,5 +1,5 @@
 import express from 'express';
-import mongoose from 'mongoose';
+
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
@@ -15,7 +15,7 @@ const app = express();
 
 // Security & Middleware
 app.use(helmet());
-app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:3000' }));
+app.use(cors({ origin: process.env.FRONTEND_URL || 'https://frontend-vid.vercel.app/' }));
 app.use(express.json());
 
 // Rate Limiting (Prevent abuse on downloads)
@@ -27,10 +27,7 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// Database Connection
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('✅ Connected to MongoDB'))
-  .catch((err) => console.error('❌ MongoDB Connection Error:', err));
+// No Database connection needed.
 
 // Route Mounts
 app.use('/api/download', downloadRoutes);

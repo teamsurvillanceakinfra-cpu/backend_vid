@@ -29,10 +29,8 @@ export const extractVideoInfo = async (rawUrl) => {
     const info = await youtubedl(url, {
       dumpSingleJson: true,
       noWarnings: true,
-      noCallHome: true,
-      noCheckCertificate: true,
+      noCheckCertificates: true,
       preferFreeFormats: true,
-      youtubeSkipDashManifest: true,
     });
 
     // Extract core metadata
@@ -66,6 +64,6 @@ export const extractVideoInfo = async (rawUrl) => {
     };
   } catch (error) {
     console.error('YT-DLP Error Output:', error.message || error);
-    throw new Error('Failed to extract video information. Supported platform links only.');
+    throw new Error('Extraction failed: ' + (error.message || 'Unknown error'));
   }
 };
