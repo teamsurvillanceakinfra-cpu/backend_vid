@@ -1,4 +1,7 @@
 import youtubedl from 'youtube-dl-exec';
+import fs from 'fs';
+import path from 'path';
+
 
 /**
  * Extracts video metadata and download links securely using yt-dlp wrapper.
@@ -26,6 +29,12 @@ export const extractVideoInfo = async (rawUrl) => {
 
     // Run youtube-dl-exec to fetch info as JSON without downloading the file
     // Assumes target machine can fetch/access standard yt-dlp binaries
+
+        // ✅ ADD THIS BLOCK
+    const cookiePath = path.resolve('./cookies.txt');
+    console.log("Cookies exist:", fs.existsSync(cookiePath));
+    console.log("Cookie path:", cookiePath);
+    
     const info = await youtubedl(url, {
       dumpSingleJson: true,
       noWarnings: true,
