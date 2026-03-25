@@ -15,7 +15,7 @@ const app = express();
 
 // Security & Middleware
 app.use(helmet());
-app.use(cors({ origin: process.env.FRONTEND_URL || 'https://frontend-vid-vpit.vercel.app/' }));
+app.use(cors({ origin: process.env.FRONTEND_URL || 'https://frontend-vid-vpit.vercel.app' }));
 app.use(express.json());
 
 // Rate Limiting (Prevent abuse on downloads)
