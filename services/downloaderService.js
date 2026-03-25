@@ -35,7 +35,7 @@ export const extractVideoInfo = async (rawUrl) => {
       noWarnings: true,
       noCheckCertificates: true,
       preferFreeFormats: true,
-      cookies: './cookies.txt' // ✅ IMPORTANT
+      cookies: './cookies.txt', // ✅ IMPORTANT
 
         // 🔥 KEY PART
   extractorArgs: [
