@@ -29,11 +29,6 @@ export const extractVideoInfo = async (rawUrl) => {
 
     // Run youtube-dl-exec to fetch info as JSON without downloading the file
     // Assumes target machine can fetch/access standard yt-dlp binaries
-
-        // ✅ ADD THIS BLOCK
-    const cookiePath = path.resolve('./cookies.txt');
-    console.log("Cookies exist:", fs.existsSync(cookiePath));
-    console.log("Cookie path:", cookiePath);
     
     const info = await youtubedl(url, {
       dumpSingleJson: true,
@@ -41,6 +36,15 @@ export const extractVideoInfo = async (rawUrl) => {
       noCheckCertificates: true,
       preferFreeFormats: true,
       cookies: './cookies.txt' // ✅ IMPORTANT
+
+        // 🔥 KEY PART
+  extractorArgs: [
+    'youtube:player_client=android'
+  ],
+
+  addHeader: [
+    'user-agent:com.google.android.youtube/17.31.35 (Linux; U; Android 11)'
+  ],
     });
 
     // Extract core metadata
