@@ -31,6 +31,7 @@ export const extractVideoInfo = async (rawUrl) => {
       noWarnings: true,
       noCheckCertificates: true,
       preferFreeFormats: true,
+      cookies: './cookies.txt' // ✅ IMPORTANT
     });
 
     // Extract core metadata
