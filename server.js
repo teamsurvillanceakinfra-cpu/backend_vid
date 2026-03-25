@@ -15,7 +15,7 @@ const app = express();
 
 // Security & Middleware
 app.use(helmet());
-app.use(cors({ origin: process.env.FRONTEND_URL || 'frontend-vid.vercel.app/' }));
+app.use(cors({ origin: process.env.FRONTEND_URL || 'https://frontend-vid-vpit.vercel.app/' }));
 app.use(express.json());
 
 // Rate Limiting (Prevent abuse on downloads)
@@ -30,10 +30,10 @@ app.use(limiter);
 // No Database connection needed.
 
 // Route Mounts
-app.use('/api/download', downloadRoutes);
+app.use('https://frontend-vid-vpit.vercel.app/app/api/download', downloadRoutes);
 
 // Health Check
-app.get('/api/health', (req, res) => res.json({ status: 'success', message: 'VidSnatcher Core API running securely!' }));
+app.get('https://frontend-vid-vpit.vercel.app/app/api/download/api/health', (req, res) => res.json({ status: 'success', message: 'VidSnatcher Core API running securely!' }));
 
 // Global Error Handler
 app.use(errorHandler);
