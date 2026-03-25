@@ -33,6 +33,15 @@ export const extractVideoInfo = async (rawUrl) => {
       noWarnings: true,
       noCheckCertificates: true,
       preferFreeFormats: true,
+
+        extractorArgs: [
+    'dailymotion:impersonate=false'
+  ],
+
+  addHeader: [
+    'user-agent:Mozilla/5.0'
+  ],
+      
     });
 
     // Extract core metadata
