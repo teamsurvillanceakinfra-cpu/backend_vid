@@ -36,9 +36,6 @@ export const extractVideoInfo = async (rawUrl) => {
       noCheckCertificates: true,
       preferFreeFormats: true,
       cookies:cookiePath,
-      extractorArgs: [
-      'youtube:player_client=android',
-      ],
     });
 
     // Extract core metadata
