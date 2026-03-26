@@ -1,5 +1,6 @@
 import youtubedl from 'youtube-dl-exec';
-
+import fs from 'fs';
+import path from 'path';
 
 /**
  * Extracts video metadata and download links securely using yt-dlp wrapper.
@@ -27,23 +28,21 @@ export const extractVideoInfo = async (rawUrl) => {
 
     // Run youtube-dl-exec to fetch info as JSON without downloading the file
     // Assumes target machine can fetch/access standard yt-dlp binaries
+    const cookiePath = path.resolve('./cookies.txt');
     
     const info = await youtubedl(url, {
       dumpSingleJson: true,
       noWarnings: true,
       noCheckCertificates: true,
       preferFreeFormats: true,
-
-     extractorArgs: {
-  dailymotion: {
-    impersonate: 'false'
-  }
-},
-
-  addHeader: [
-    'user-agent:Mozilla/5.0'
-  ],
-      
+      cookies:cookiePath,
+      extractorArgs: [
+      'youtube:player_client=android',
+      'dailymotion:impersonate=false'
+      ],
+      addHeader: [
+      'user-agent:Mozilla/5.0'
+       ],
     });
 
     // Extract core metadata
