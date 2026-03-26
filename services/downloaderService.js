@@ -38,11 +38,7 @@ export const extractVideoInfo = async (rawUrl) => {
       cookies:cookiePath,
       extractorArgs: [
       'youtube:player_client=android',
-      'dailymotion:impersonate=false'
       ],
-      addHeader: [
-      'user-agent:Mozilla/5.0'
-       ],
     });
 
     // Extract core metadata
