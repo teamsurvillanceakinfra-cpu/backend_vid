@@ -35,6 +35,8 @@ export const extractVideoInfo = async (rawUrl) => {
       noWarnings: true,
       noCheckCertificates: true,
       preferFreeFormats: true,
+      noPlaylist: true, // changes new
+      forceIpv4: true,  // changes new
       cookies:cookiePath,
     });
 
