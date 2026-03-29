@@ -1,6 +1,4 @@
 import youtubedl from 'youtube-dl-exec';
-import fs from 'fs';
-import path from 'path';
 
 /**
  * Extracts video metadata and download links securely using yt-dlp wrapper.
@@ -28,16 +26,13 @@ export const extractVideoInfo = async (rawUrl) => {
 
     // Run youtube-dl-exec to fetch info as JSON without downloading the file
     // Assumes target machine can fetch/access standard yt-dlp binaries
-    const cookiePath = path.resolve('./cookies.txt');
-    
     const info = await youtubedl(url, {
       dumpSingleJson: true,
       noWarnings: true,
       noCheckCertificates: true,
       preferFreeFormats: true,
       noPlaylist: true, // changes new
-      forceIpv4: true,  // changes new
-      cookies:cookiePath,
+      forceIpv4: true, // Prevents extremely slow IPv6 fallback timeouts on servers new
     });
 
     // Extract core metadata
@@ -45,21 +40,25 @@ export const extractVideoInfo = async (rawUrl) => {
     
     // Normalize and filter valid qualities
     const qualityOptions = (info.formats || [])
-      .filter(f => f.url && (f.vcodec !== 'none' || f.acodec !== 'none'))
+      .filter(f => f.url && f.vcodec !== 'none' && f.acodec !== 'none') // Ensure video + audio
       .map(f => ({
         formatId: f.format_id,
-        resolution: f.resolution || (f.height ? `${f.height}p` : 'Audio/Unknown'),
+        resolution: f.resolution || (f.height ? `${f.height}p` : 'Video'),
         ext: f.ext,
         url: f.url,
-        videoOnly: f.acodec === 'none',
-        audioOnly: f.vcodec === 'none'
+        videoOnly: false,
+        audioOnly: false,
+        height: f.height || 0
       }))
-      // Sort roughly: multiplexed formats first
+      // Sort: Better resolution first, prefer MP4 if resolutions are equal
       .sort((a, b) => {
-        if (!a.videoOnly && !a.audioOnly && (b.videoOnly || b.audioOnly)) return -1;
-        if ((a.videoOnly || a.audioOnly) && !b.videoOnly && !b.audioOnly) return 1;
+        if (b.height !== a.height) return (b.height || 0) - (a.height || 0);
+        if (a.ext === 'mp4' && b.ext !== 'mp4') return -1;
+        if (a.ext !== 'mp4' && b.ext === 'mp4') return 1;
         return 0;
-      });
+      })
+      .slice(0, 3); // Limit to top 3
+
 
     return {
       platform,
